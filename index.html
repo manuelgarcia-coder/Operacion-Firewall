@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operación Firewall | Unidad Nacional de Respuesta Digital</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Encabezado / Centro de Mando -->
+    <header class="cyber-header">
+        <div class="logo-zone">
+            <span class="cyber-badge-top">UNRD-CEIBAL</span>
+            <h1>OPERACIÓN FIREWALL</h1>
+            <p class="subtitle">El Caso Conecta Joven &bull; Unidad Nacional de Respuesta Digital</p>
+        </div>
+        <div class="agent-panel">
+            <div id="login-zone" class="agent-input-group">
+                <label for="agent-name">AGENTE EN SERVICIO:</label>
+                <input type="text" id="agent-name" placeholder="Ingresa tu Nombre o Nombre de Agente..." autocomplete="off">
+            </div>
+            <div id="active-agent-display" class="agent-active hidden">
+                AGENTE: <span id="display-name">--</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Barra de Estado y Progreso Global -->
+    <section class="status-bar">
+        <div class="progress-container">
+            <div class="progress-info">
+                <span>NIVEL DE RECUPERACIÓN DE SISTEMA:</span>
+                <span id="progress-text">0% (0/6 Evidencias)</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenedor Principal de la Misión -->
+    <main class="main-layout">
+
+        <!-- Columna Izquierda: Consola de Retos -->
+        <section class="console-section">
+            <div class="terminal-box">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="terminal-title">CONSOLA DE INVESTIGACIÓN - RETOS PROGRESIVOS</span>
+                </div>
+
+                <div class="terminal-body">
+
+                    <!-- Muestra la Historia / Introducción si no hay un reto activo -->
+                    <article id="story-brief" class="briefing-card">
+                        <h3>ALERTA DE SEGURIDAD NATIVO 02:14 Hs.</h3>
+                        <p>Se ha detectado un acceso no autorizado a los servidores centrales de <strong>Conecta Joven</strong>. La Unidad Nacional de Respuesta Digital necesita nuevos agentes para investigar el incidente.</p>
+                        <p>Tu misión consiste en superar 6 retos tácticos. Cada desafío recuperará una evidencia crítica del atacante. Reúne las 6 evidencias para descubrir cómo ingresó y obtener tu acreditación como <strong>Agente de Ciudadanía Digital</strong>.</p>
+                        <button class="btn-cyber" onclick="startMission()">INICIAR INVESTIGACIÓN</button>
+                    </article>
+
+                    <!-- RETO 1: Contraseñas Seguras -->
+                    <article id="reto-1" class="challenge-card hidden">
+                        <span class="tag-reto">RETO 01 / 06</span>
+                        <h2>RETO 1: FORTALECIMIENTO DE CREDENCIALES</h2>
+                        <p>El atacante vulneró cuentas con contraseñas débiles. Crea una contraseña segura para bloquear el puerto de acceso.</p>
+                        <div class="challenge-rules">
+                            <strong>Requisitos de Seguridad:</strong>
+                            <ul>
+                                <li>Mínimo 8 caracteres</li>
+                                <li>Al menos una letra mayúscula</li>
+                                <li>Al menos un número</li>
+                                <li>Al menos un símbolo especial (!@#$%^&*)</li>
+                            </ul>
+                        </div>
+                        <div class="interactive-zone">
+                            <input type="password" id="pass-input" placeholder="Ingresa una clave segura..." oninput="evaluatePassword()">
+                            <div class="strength-meter">
+                                <div id="strength-bar"></div>
+                            </div>
+                            <p id="pass-feedback" class="feedback"></p>
+                        </div>
+                        <button id="btn-reto-1" class="btn-cyber hidden" onclick="solveReto1()">APLICAR BLOQUEO Y EXTRAER EVIDENCIA</button>
+                    </article>
+
+                    <!-- RETO 2: Phishing -->
+                    <article id="reto-2" class="challenge-card hidden">
+                        <span class="tag-reto">RETO 02 / 06</span>
+                        <h2>RETO 2: DETECCIÓN DE PHISHING</h2>
+                        <p>Analiza el siguiente correo electrónico recibido por un administrador del sistema antes del ataque:</p>
+
+                        <div class="email-mockup">
+                            <div class="email-header">
+                                <strong>De:</strong> soporte@conectajoven-ceibal.security-update.com<br>
+                                <strong>Para:</strong> admin@conectajoven.edu.uy<br>
+                                <strong>Asunto:</strong> ¡URGENTE! Tu cuenta será suspendida en 10 minutos
+                            </div>
+                            <div class="email-body">
+                                Estimado usuario,<br>
+                                Detectamos actividad sospechosa. Haz clic en el enlace para verificar tu identidad y evitar el cierre permanente de tu cuenta:<br>
+                                <a href="#" onclick="return false;">http://conectajoven-login.temp-site.net/verify</a>
+                            </div>
+                        </div>
+
+                        <p>¿Cuál es la anomalía principal que confirma que es un ataque de Phishing?</p>
+                        <div class="options-grid">
+                            <button class="btn-option" onclick="solveReto2(false)">A) El correo está escrito en español estándar.</button>
+                            <button class="btn-option" onclick="solveReto2(true)">B) El dominio del remitente y la URL no corresponden al sitio oficial.</button>
+                            <button class="btn-option" onclick="solveReto2(false)">C) El asunto tiene la palabra "URGENTE".</button>
+                        </div>
+                        <p id="feedback-2" class="feedback"></p>
+                    </article>
+
+                    <!-- RETO 3: Huella Digital -->
+                    <article id="reto-3" class="challenge-card hidden">
+                        <span class="tag-reto">RETO 03 / 06</span>
+                        <h2>RETO 3: RASTRO Y HUELLA DIGITAL</h2>
+                        <p>El intruso obtuvo información sensible publicada abiertamente por los usuarios. Identifica qué acción **AUMENTA** de forma peligrosa tu huella digital expuesta:</p>
+                        <div class="options-grid">
+                            <button class="btn-option" onclick="solveReto3(false)">A) Usar navegación privada al ingresar a cuentas públicas.</button>
+                            <button class="btn-option" onclick="solveReto3(true)">B) Publicar fotos donde se vea la credencial escolar o dirección en redes públicas.</button>
+                            <button class="btn-option" onclick="solveReto3(false)">C) Borrar las cookies e historial de navegación periódicamente.</button>
+                        </div>
+                        <p id="feedback-3" class="feedback"></p>
+                    </article>
+
+                    <!-- RETO 4: Ciberacoso -->
+                    <article id="reto-4" class="challenge-card hidden">
+                        <span class="tag-reto">RETO 04 / 06</span>
+                        <h2>RETO 4: PROTOCOLO ANTE CIBERACOSO</h2>
+                        <p>Durante la investigación encontramos que un canal de mensajería del equipo está siendo usado para intimidar a un usuario. ¿Cuál es la respuesta adecuada según el protocolo de la Unidad?</p>
+                        <div class="options-grid">
+                            <button class="btn-option" onclick="solveReto4(false)">A) Responder con el mismo tono para defenderse públicamente.</button>
+                            <button class="btn-option" onclick="solveReto4(true)">B) Guardar evidencias (capturas), bloquear al agresor y reportar a un adulto o autoridad.</button>
+                            <button class="btn-option" onclick="solveReto4(false)">C) Ignorar el problema y borrar la aplicación sin avisar a nadie.</button>
+                        </div>
+                        <p id="feedback-4" class="feedback"></p>
+                    </article>
+
+                    <!-- RETO 5: Fake News -->
+                    <article id="reto-5" class="challenge-card hidden">
+                        <span class="tag-reto">RETO 05 / 06</span>
+                        <h2>RETO 5: VERIFICACIÓN DE FAKE NEWS</h2>
+                        <p>Se está difundiendo una alerta falsa para generar caos en el servidor. ¿Qué estrategia te permite verificar la veracidad de la noticia antes de compartirla?</p>
+                        <div class="options-grid">
+                            <button class="btn-option" onclick="solveReto5(false)">A) Ver si la noticia tiene muchos 'Me Gusta' y fue compartida en un grupo.</button>
+                            <button class="btn-option" onclick="solveReto5(true)">B) Contrastar la información con fuentes oficiales, verificar fecha, autor y buscar otras publicaciones fidedignas.</button>
+                            <button class="btn-option" onclick="solveReto5(false)">C) Confiar inmediatamente si viene en formato de imagen con texto en mayúsculas.</button>
+                        </div>
+                        <p id="feedback-5" class="feedback"></p>
+                    </article>
+
+                    <!-- RETO 6: Investigación Forense (Reto Final) -->
+                    <article id="reto-6" class="challenge-card hidden">
+                        <span class="tag-reto">RETO 06 / 06 - RETO FINAL FORENSE</span>
+                        <h2>RETO 6: ANÁLISIS DE VECTOR DE ATAQUE</h2>
+                        <p>Examina las tres evidencias recuperadas de los servidores de Conecta Joven:</p>
+
+                        <div class="forensic-grid">
+                            <div class="forensic-item">
+                                <h4>EVIDENCIA A: Correo de Acceso</h4>
+                                <pre class="log-box">DE: soporte-alert@external-net.org
+PARA: operador@conectajoven.edu.uy
+MENSAJE: "Actualice su clave urgente aquí: http://bit.ly/fake-link"
+FECHA: 02:10 AM</pre>
+                            </div>
+                            <div class="forensic-item">
+                                <h4>EVIDENCIA B: Registro de Acceso</h4>
+                                <pre class="log-box">02:14:02 - Login Exitoso
+IP: 185.220.101.5
+Usuario: operador@conectajoven.edu.uy
+Método: Clave válida desde ubicación desconocida.</pre>
+                            </div>
+                            <div class="forensic-item">
+                                <h4>EVIDENCIA C: Configuración</h4>
+                                <pre class="log-box">Autenticación Multifactor (MFA): DESACTIVADA
+Último cambio de clave: Hace 240 días</pre>
+                            </div>
+                        </div>
+
+                        <p class="question-title">Identifica cuál fue el punto inicial de la intrusión:</p>
+                        <div class="options-grid">
+                            <button class="btn-option" onclick="solveReto6('A')">A) Contraseña robada mediante phishing</button>
+                            <button class="btn-option" onclick="solveReto6('B')">B) Ataque físico al servidor</button>
+                            <button class="btn-option" onclick="solveReto6('C')">C) Fallo eléctrico</button>
+                        </div>
+                        <p id="feedback-6" class="feedback"></p>
+                    </article>
+
+                    <!-- SECCIÓN DE DIPLOMA Y FINAL -->
+                    <article id="diploma-section" class="challenge-card hidden">
+                        <div class="diploma-box" id="diploma-printable">
+                            <div class="diploma-border">
+                                <span class="diploma-badge">CIBERSEGURIDAD UNRD</span>
+                                <h2>CERTIFICADO DE ACREDITACIÓN</h2>
+                                <p>Por la presente se certifica que el/la agente:</p>
+                                <h1 id="diploma-agent-name" class="diploma-name">[NOMBRE DEL ESTUDIANTE]</h1>
+                                <p>Ha completado exitosamente la <strong>OPERACIÓN FIREWALL</strong>, resolviendo los 6 retos tácticos, asegurando los servidores de Conecta Joven y demostrando competencias en el uso seguro y responsable de la tecnología.</p>
+                                <div class="diploma-title-granted">
+                                    CONCEDIENDO EL TÍTULO OFICIAL DE:
+                                    <h3>"AGENTE DE CIUDADANÍA DIGITAL"</h3>
+                                </div>
+                                <div class="diploma-footer">
+                                    <div>
+                                        <p>  Manuel García  </p>
+                                        <small>Unidad Nacional de Respuesta Digital</small>
+                                    </div>
+                                    <div>
+                                        <p class="code-stamp" id="diploma-code">COD-000000</p>
+                                        <small>Verificación de Autenticidad</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="actions-zone">
+                            <button class="btn-cyber btn-download" onclick="window.print()">DESCARGAR / IMPRIMIR DIPLOMA</button>
+                            <button class="btn-cyber btn-reset" onclick="location.reload()">REINICIAR MISIÓN</button>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Columna Derecha: Evidencias e Insignias -->
+        <aside class="sidebar-section">
+
+            <!-- Panel de Evidencias -->
+            <div class="panel-box">
+                <h3>PANEL DE EVIDENCIAS RECUPERADAS</h3>
+                <ul class="evidence-list" id="evidence-list">
+                    <li class="locked" id="evi-1"><span class="status-icon">🔒</span> Evidencia 1: Parámetros de Cifrado</li>
+                    <li class="locked" id="evi-2"><span class="status-icon">🔒</span> Evidencia 2: Cabeceras del Phishing</li>
+                    <li class="locked" id="evi-3"><span class="status-icon">🔒</span> Evidencia 3: Registros de Exposición Digital</li>
+                    <li class="locked" id="evi-4"><span class="status-icon">🔒</span> Evidencia 4: Reportes de Interacción Social</li>
+                    <li class="locked" id="evi-5"><span class="status-icon">🔒</span> Evidencia 5: Fuentes Verificadas de Información</li>
+                    <li class="locked" id="evi-6"><span class="status-icon">🔒</span> Evidencia 6: Vector de Entrada Identificado</li>
+                </ul>
+            </div>
+
+            <!-- Panel de Insignias -->
+            <div class="panel-box">
+                <h3>SISTEMA DE INSIGNIAS</h3>
+                <div class="badges-grid">
+                    <div class="badge-card locked" id="badge-1">
+                        <div class="badge-icon">🔑</div>
+                        <div class="badge-name">Guardián de Claves</div>
+                    </div>
+                    <div class="badge-card locked" id="badge-2">
+                        <div class="badge-icon">🎣</div>
+                        <div class="badge-name">Anti-Phishing</div>
+                    </div>
+                    <div class="badge-card locked" id="badge-3">
+                        <div class="badge-icon">👣</div>
+                        <div class="badge-name">Analista de Huella</div>
+                    </div>
+                    <div class="badge-card locked" id="badge-4">
+                        <div class="badge-icon">🛡️</div>
+                        <div class="badge-name">Defensor Digital</div>
+                    </div>
+                    <div class="badge-card locked" id="badge-5">
+                        <div class="badge-icon">📰</div>
+                        <div class="badge-name">Verificador de Fe</div>
+                    </div>
+                    <div class="badge-card locked" id="badge-6">
+                        <div class="badge-icon">🔍</div>
+                        <div class="badge-name">Detective Ciber</div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <footer class="cyber-footer">
+        <p>Operación Firewall &copy; 2026 - Proyecto de Ciberseguridad Educativa &bull; Diseñado para entornos Ceibal</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
